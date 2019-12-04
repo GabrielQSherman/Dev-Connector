@@ -4,7 +4,7 @@ let readline = require('readline'),
         output: process.stdout
     });
 
-rl.question("Enter a number, your output will be that numbers sumation\nNumber: ", (num) => {
+rl.question("Enter a number, your output will be that number's sumation\nNumber: ", (num) => {
 
     num = parseInt(num);
     
@@ -21,7 +21,7 @@ rl.question("Enter a number, your output will be that numbers sumation\nNumber: 
         }
     }
 
-    console.log(sum(num));
+    console.log(`\nThe sumation of ${num} is ${sum(num)}.`);
     
 
     rl.close()
