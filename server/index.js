@@ -16,8 +16,12 @@ const PORT = process.env.PORT || 3000,
 mongoConnect(MONGO_URI)
 
 // ROUTERS/Middleware
+const userRouter = require('./routes/user');
+
 app.use(morgan('dev'));
 app.use(helmet());
+app.use(express.json())
+app.use('/user', userRouter);
 
 //open server to listen on a specific port
 app.listen( PORT, (err) => {
