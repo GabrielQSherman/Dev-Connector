@@ -28,7 +28,13 @@ mongoose.model(
         },
 
         posts: {
-            type: [mongoose.Types.ObjectId],
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'posts',
+            default: []
+        },
+
+        likedPosts: {
+            type: [mongoose.Schema.Types.ObjectId],
             ref: 'posts',
             default: []
         },
