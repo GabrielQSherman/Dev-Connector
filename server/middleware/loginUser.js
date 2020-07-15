@@ -4,41 +4,43 @@ const bcrypt = require("bcrypt");
 
 
 const failedLogin = ( req, res) => {
-    return res.status(409).json({message: "Login Failed"});
+    res.status(409).json({message: "Login Failed"});
 }
 
 module.exports = async (req, res, next) => {
 
     try {
-        const email = req.body.email,
-              emailValid = 
-                (email === undefined || email.trim() === '')
-                    ? false
-                    : validator.isEmail(email);
 
-        if (!emailValid) {
-            console.error('\nLogin Failed: Email Not Valid');
-            failedLogin()    
+        const {login, password: pass} = req.body;
+
+        if (!login || !pass) {
+            console.error('\nLogin Failed: Login Credentials Not Present');
+            return failedLogin(req,res)
         }
 
-        const user = await User.findOne({email: req.body.email});
-
-        if (user === null) {
-            console.error('\nLogin Failed: Email Not In Use');
-            failedLogin()
+        if (login === undefined || login.trim() === '') {
+            console.error('\nLogin Failed: Email Or Username Not Valid');
+            return failedLogin(req,res)
         }
-        const pass = req.body.password,
-              passTest = 
+
+        const userSearch = await User.findOne({$or: [{email: login}, {username: login}]});
+
+        if (userSearch === null) {
+            console.error('\nLogin Failed: Email/Username Not In Use');
+            return failedLogin(req,res)
+        }
+
+        const passwordTest = 
                 (pass === undefined || pass.trim() === '') 
                     ? false 
-                    : await bcrypt.compare(pass, user.password);
+                    : await bcrypt.compare(pass, userSearch.password);
 
-        if (!passTest) {
+        if (!passwordTest) {
             console.error('\nLogin Failed: Password Invalid');
-            failedLogin()
+            return failedLogin(req,res)
         }
 
-        req.id = user._id;
+        req.id = userSearch._id;
 
         next() //if code execution reaches here, it is assumed the user has successfully logged in
         
