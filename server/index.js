@@ -17,11 +17,13 @@ mongoConnect(MONGO_URI)
 
 // ROUTERS/Middleware
 const userRouter = require('./routes/user');
+const postRouter = require('./routes/post');
 
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(express.json())
 app.use('/user', userRouter);
+app.use('/post', postRouter);
 
 //open server to listen on a specific port
 app.listen( PORT, (err) => {
