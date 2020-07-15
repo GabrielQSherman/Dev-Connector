@@ -1,6 +1,5 @@
 //required packages
 const mongoose = require("mongoose");
-const { text } = require("express");
 
 module.exports = 
 mongoose.model(
@@ -16,7 +15,7 @@ mongoose.model(
             type: String,
             required: true,
             minlength: 3,
-            maxlength: 177,
+            maxlength: 333,
         },
         
         image: {
@@ -24,9 +23,20 @@ mongoose.model(
             required: true
         },
 
+        git: {
+            type: String,
+            required: true
+        },
+
         likes: {
             type: [mongoose.Schema.Types.ObjectId],
             ref: 'users',
+            default: []
+        },
+
+        comments: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'comments',
             default: []
         }
 
