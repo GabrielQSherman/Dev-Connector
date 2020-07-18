@@ -7,11 +7,11 @@ import {
 } from './types';
 
 // Login User
-export const login = (email, password) => async dispatch => {
-    const body = { email, password };
+export const login = (login, password) => async dispatch => {
+    const body = { login, password };
   
     try {
-      const res = await api.post('/auth', body);
+      const res = await api.put('/user', body);
   
       dispatch({
         type: LOGIN_SUCCESS,
