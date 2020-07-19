@@ -7,10 +7,10 @@ export default function Landing() {
         className="landing" 
         style={{...styles.container}}
         >
-            <Link to="/login">
+            <Link to="/login" style={{...styles.link}}>
                 Login
             </Link>
-            <Link to="/register">
+            <Link to="/register" style={{...styles.link}}>
                 Register
             </Link>
         </div>
@@ -24,6 +24,9 @@ const styles = {
     },
 
     link: {
+
+        color: 'black',
+        backgroundColor: 'white'
 
     }
 }
